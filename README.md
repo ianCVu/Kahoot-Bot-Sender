@@ -7,7 +7,7 @@ This Node.js program runs on Express and `kahoot.js-latest`, so start by install
 npm install express
 npm install kahoot.js-latest
 ```
-
+### Running Kahoot Bot Sender
 Then, download the raw file `botSender.js` on the Github Repo. Afterwards find the path to the JavaScript file on your computer. Then run the file by running:
 ```
 node botSender.js
