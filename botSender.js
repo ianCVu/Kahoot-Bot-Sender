@@ -73,18 +73,24 @@ app.get('/', function(req, res) {
 });
 app.post('/post', function(req, res) {
     let bot = 0;
-    setInterval(function() {
-        const client = new Kahoot();
-        client.join(
-            req.body.gameId,
-            req.body.botName + "{" + bot + "}"
-        ).catch(function(e) {
-            console.log(e);
-        });
-        bot = bot + 1;
-        client.on("QuestionStart", function(question) {
-            question.answer(Math.floor(Math.random() * 4));
-        });
+    let interval = setInterval(function() {
+        try {
+            const client = new Kahoot();
+            client.join(
+                req.body.gameId,
+                req.body.botName + "{" + bot + "}"
+            ).catch(function(e) {
+                console.log(e);
+            });
+            bot = bot + 1;
+            client.on("QuestionStart", function(question) {
+                question.answer(Math.floor(Math.random() * 4));
+            });
+        } catch(e) {
+            if (e.description === "NONEXISTING_SESSION") {
+                clearInterval(interval);
+            }
+        }
     }, 2000);
 });
 app.listen(3000);
